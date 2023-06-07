@@ -1,5 +1,5 @@
-
-
+----------------------------------------------------------------
+-- LISTA POR: DANIEL MINGORANSE E GABRIEL ABRAHÃO
 ----------------------------------------------------------------
 --5.1
 data TipoProduto = Escritorio | Informatica | Livro | Filme | Total
@@ -50,6 +50,23 @@ instance Functor Dupla where
   fmap f (Dupla x n y) = Dupla (f x) n (f y)
 
   ----------------------------------------------------------------
+  -- 7.6
+
+data Dupla a = Dupla a Int a
+
+instance Functor Dupla where
+  fmap f (Dupla x n y) = Dupla (f x) n (f y)
+
+duplaInicial :: Dupla Int
+duplaInicial = Dupla 10 5 20
+
+incrementar :: Int -> Int
+incrementar x = x + 1
+
+resultado :: Dupla Int
+resultado = fmap incrementar duplaInicial
+
+----------------------------------------------------------------
   --8.1 
 
   instance Functor Caixa where
@@ -85,25 +102,18 @@ instance Monad Caixa where
 
 ----------------------------------------------------------------
 --8.3
--- Tres 1 2 3 >>= mult234 >>= mult234:
+-- Q - Tres 1 2 3 >>= mult234 >>= mult234:
+-- R - Tres 2 6 12.
 
--- Começamos com a expressão Tres 1 2 3, que cria uma caixa com os valores 1, 2 e 3 nas coordenadas.
--- Em seguida, utilizamos o operador >>= para aplicar a função mult234 a esses valores.
--- A função mult234 multiplica cada valor por 2, 3 e 4 nas coordenadas correspondentes.
--- Portanto, o resultado será a caixa com os valores resultantes: Tres 2 6 12.
--- Dois 2 4 >>= mult234:
 
--- Começamos com a expressão Dois 2 4, que cria uma caixa com os valores 2 e 4 nas coordenadas.
--- Em seguida, utilizamos o operador >>= para aplicar a função mult234 a esses valores.
--- A função mult234 multiplica cada valor por 2, 3 e 4 nas coordenadas correspondentes.
--- Portanto, o resultado será a caixa com os valores resultantes: Dois 4 12.
--- :kind Coisa:
+-- Q - Dois 2 4 >>= mult234:
+-- R -  Dois 4 12.
 
--- O comando :kind é usado no GHCi para obter o tipo de uma expressão.
--- No caso de Coisa, não é possível determinar o tipo sem a definição do tipo Coisa. Portanto, não é possível determinar o valor dessa expressão sem mais informações.
--- Dois 2 3 >>= \_ -> Dois 7 7:
 
--- Começamos com a expressão Dois 2 3, que cria uma caixa com os valores 2 e 3 nas coordenadas.
--- Em seguida, utilizamos o operador >>= para aplicar a função lambda \_ -> Dois 7 7 a esses valores.
--- A função lambda ignora o valor anterior e retorna a caixa Dois 7 7.
--- Portanto, o resultado será a caixa Dois 7 7.
+-- Q - :kind Coisa:
+-- R - Não é possível determinar
+
+
+-- Q - Dois 2 3 >>= \_ -> Dois 7 7:
+-- Dois 2 3 é ignorado pela função Lambda
+-- Ou seja R - Dois 7 7.
